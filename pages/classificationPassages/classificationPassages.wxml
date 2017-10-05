@@ -1,0 +1,22 @@
+<!--pages/classificationPassages/classificationPassages.wxml-->
+<view class='titleView'>
+  <image class='titleImage' src='{{titleImage}}'></image>
+  <text>{{title}}</text>
+</view>
+
+<view class='line'></view>
+
+<view class='passageList' wx:for="{{passageList}}" bindtap='turnTo'>
+  <image class='cover' src='{{item.cover}}'></image>
+
+  <view class='intro'>
+    <text class='title'>{{item.title}}</text>
+    <text class="time">Katherine | 2017.09.09</text>
+    <view class='read'>
+      <image class='icon' src='/imag/read03.png'></image>
+      <text class='author'>{{item.readAmount}}</text>
+    </view>
+    
+  </view>
+
+</view>

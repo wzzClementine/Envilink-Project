@@ -1,0 +1,75 @@
+<!--pages/passageDetails/passageDetails.wxml-->
+<view class='passage'> 
+  <view class='topPart'>
+    <image class='picTop' src='/imag/poster02.jpg'></image>
+  </view>
+
+  <text class='title'>倡导低碳生活 呵护生态家园</text>
+
+  <view class="authorView">
+     <text class="author">Katherine | 2017.09.09</text>
+     <view class="add" bindtap="add">+关注</view>
+  </view>
+
+  <view class='titlePart'>
+    <view class='numberPart1'>
+      <image class='icon' src='/imag/read01.png'></image>
+      <text class='number'>{{readAmount}}</text>
+    </view>
+    <view class='numberPart' bindtap='addLikeAmount'>
+      <image class='icon' src='{{InitialLicon}}'></image>
+      <text class='number'>{{likeAmount}}</text>
+    </view>
+
+    <image class='icon1' src='{{InitialCicon}}' bindtap='changeIcon'></image>
+  
+  </view>
+
+  <view class='line'></view>
+
+  <view class='contentPart'>
+   <text class='content'>央广网乌鲁木齐6月14日消息（记者张孝成 乌鲁木齐台记者 汪亮）13日是全国低碳日，新疆节能监察总队走进乌鲁木齐社区，开展以“节能有我 绿色共享”为主题的节能宣传活动，提升边疆各族居民节能意识。外卖类App“饿了么”近期也发布了中国外卖大数据，显示中国市场用户规模达到6亿， 2016年在线外卖用户消费频次每周消费3次以上的用户占比高达63.3%，外卖就餐成为常规方式。节能环保产业的快速发展，不仅不会成为造成经济下行的主因，而且能够倒逼行业优胜劣汰，促进产业升级。在当前经济新常态形势下，政府有意识让环保产业接过接力棒，成为经济发展的新引擎。</text>
+  </view>
+
+
+  <view class='comment' >
+    <input class='commentInput'placeholder='评论一下...' bindblur='saveContent' bindconfirm='getContent' value='{{org}}' ></input>
+    <image class='iconButton'  src='/imag/submit01.png' bindtap='submitJudgment'></image>
+  </view>
+
+  <view class='line1'></view>
+
+<!-- 内容部分wxml-->
+  <view class='commentList' wx:for="{{examples}}">
+
+    <view class='leftPart'>
+
+      <view class='userInfo'>
+        <image class='userAvatar' src='{{item.avatar}}'></image>
+        <view class='userName'>
+          <text class='name'>{{item.name}}</text>
+          <text class='time'>{{item.time}}</text>
+        </view> 
+        <image class='iconDelete' src='/imag/reply02.png' bindtap='replyComment'></image>
+      </view>
+
+      <text class='commentDetails'>{{item.commentDetails}}</text>
+
+      <view class='replyContent' wx:for="{{item.commentReply}}" wx:for-item="reply" bindtap='replyComment'>
+         <text class='nickName'>{{reply.nickName}}:</text>
+         <text>{{reply.replyContent}}</text>
+      </view>
+
+
+    </view>
+
+  </view>
+ 
+</view>
+
+<view class='reply' hidden='{{isReply}}'>
+        <input class='commentInput'  placeholder='回复...' bindblur='hiddenAndSave' bindconfirm='getReplyContent' value='{{orgR}}'></input>
+        <image class='iconButton1'  src='/imag/submit01.png' bindtap='submitReply'></image>
+</view>
+
+

@@ -1,0 +1,48 @@
+<!--pages/message/message.wxml-->
+
+<!--顶部切换栏-->
+<view class='navigationBar'>
+  <view id="0" class="naviView{{isShow0==false?'Selected':''}}" bindtap='switchTab'>
+    <text>评论</text>
+  </view>
+   <view id="1" class="naviView{{isShow1==false?'Selected':''}}" bindtap='switchTab'>
+    <text>回答</text>
+  </view>
+  <view id="2" class="naviView{{isShow2==false?'Selected':''}}" bindtap='switchTab'>
+    <text>问题</text>
+  </view>
+  <view id="3" class="naviView{{isShow3==false?'Selected':''}}"bindtap='switchTab'>
+    <text>足迹</text>
+  </view>
+
+</view>
+
+
+<!-- 内容部分wxml-->
+<view class='commentList' wx:for="{{examples}}" hidden='{{isShow0}}'>
+
+  <view class='leftPart'>
+
+    <view class='userInfo'>
+      <image class='userAvatar' src='{{item.avatar}}'></image>
+      <view class='userName'>
+        <text class='name'>{{item.name}}</text>
+        <text class='time'>{{item.time}}</text>
+      </view> 
+    </view>
+
+    <text class='commentDetails'>{{item.commentDetails}}</text>
+  </view>
+
+
+  <view class='rightPart'>
+    <text class='postDetails'>{{item.post}}</text>
+  </view>
+ 
+</view>
+
+<view hidden='{{isShow1}}' bindtap='switchTab'><text>回答part</text></view>
+
+<view hidden='{{isShow2}}' bindtap='switchTab'><text>问题part</text></view>
+
+<view hidden='{{isShow3}}' bindtap='switchTab'><text>足迹part</text></view>

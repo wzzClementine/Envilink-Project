@@ -1,0 +1,66 @@
+<!--index.wxml-->
+<view class='swiperView' bindtap='turnToPassageDetail'>
+  <swiper indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <block wx:for="{{imgUrls}}">
+    <swiper-item class="swiperItem">
+      <image src="{{item}}" class="swiperImage" />
+    </swiper-item>
+  </block>
+</swiper>
+</view>
+
+<view class='line'></view>
+
+<view class='navigation'>
+  <view  wx:for="{{navigation}}" class='navigationView' >
+     <text id='{{index}}' class="navigationText" bindtap='navigateTo'>{{item}}</text>
+  </view>
+</view>
+
+
+<view class='passageView'>
+
+  <view class='corePassageView'>
+      <image class='passageImage'  src='/imag/poster02.jpg'></image>
+    <text class='passageTitle'>倡导低碳生活 呵护生态家园 共享碧水蓝天</text>
+    <text class='passageAuthor'>Clementine | 2017.08.27</text>
+    <text class='passageDetail'>央广网乌鲁木齐6月14日消息（记者张孝成 乌鲁木齐台记者汪亮）13日是全国低碳日，新疆节能监察总队走进乌鲁木齐社区，开展以“节能有我 绿色共享”为主题的节能宣传活动，提升边疆各族居民节能意识。</text>
+    <view class='passageExpand' bindtap='turnToPassageDetail'>获取更多</view>
+  </view>
+
+  <view class='corePassageView'>
+      <image class='passageImage'  src='/imag/poster01.jpg'></image>
+    <text class='passageTitle'>环保只是为了人类自己</text>
+    <text class='passageAuthor'>Katherine | 2017.09.18</text>
+    <text class='passageDetail'>外卖类App“饿了么”近期也发布了中国外卖大数据，显示中国市场用户规模达到6亿， 2016年在线外卖用户消费频次每周消费3次以上的用户占比高达63.3%，外卖就餐成为常规方式。</text>
+    <view class='passageExpand' bindtap='turnToPassageDetail'>获取更多</view>
+  </view>
+
+
+  <view class='corePassageView'>
+      <image class='passageImage'  src='/imag/poster03.jpg'></image>
+    <text class='passageTitle'>回顾2015中国生态环保业大数据报告</text>
+    <text class='passageAuthor'>Felicity | 2017.02.11</text>
+    <text class='passageDetail'>节能环保产业的快速发展，不仅不会成为造成经济下行的主因，而且能够倒逼行业优胜劣汰，促进产业升级。在当前经济新常态形势下，政府有意识让环保产业接过接力棒，成为经济发展的新引擎。</text>
+    <view class='passageExpand' bindtap='turnToPassageDetail'>获取更多</view>
+  </view>
+ 
+
+   <view class='corePassageView'>
+      <image class='passageImage'  src='/imag/poster04.jpg'></image>
+    <text class='passageTitle'>骑友倡导绿色环保出行</text>
+    <text class='passageAuthor'>Merly | 2017.11.11</text>
+    <text class='passageDetail'>当天上午9时，骑行队伍从三亚市区出发，大约11时左右抵达大小洞天景区。置身美景之中，骑友们呼吸着负氧离子极高的清新空气，迎着海风穿梭在景区的滨海大道，成为一道靓丽的风景线。</text>
+    <view class='passageExpand' bindtap='turnToPassageDetail'>获取更多</view>
+  </view>
+
+
+
+
+
+
+</view>
+
+
+

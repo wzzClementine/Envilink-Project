@@ -1,0 +1,37 @@
+<!--pages/mine/mine.wxml-->
+<view class="personInfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover">
+</image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+</view>
+
+<view class="function">
+  <view class="function_part" bindtap="turnToMyDevices">
+    <image class="icon" src="/imag/dataOfUser02.png"></image>
+    <text class="function_text">个人资料</text>
+    <image class="icon01" src="/imag/arrow02.png"></image>
+  </view>
+    <view class="function_part" bindtap="turnToAttentionEquipment">
+    <image class="icon" src="/imag/post01.png"></image>
+    <text class="function_text">我的订单</text>
+    <image class="icon01" src="/imag/arrow02.png"></image>
+  </view>
+  <view class="function_part" bindtap="turnToAttentionEquipment">
+    <image class="icon" src="/imag/collection01.png"></image>
+    <text class="function_text">我的收藏</text>
+    <image class="icon01" src="/imag/arrow02.png"></image>
+  </view>
+  <view class="function_part" bindtap="turnToAbout">
+    <image class="icon" src="/imag/attention01.png"></image>
+    <text class="function_text">我的关注</text>
+    <image class="icon01" src="/imag/arrow02.png"></image>
+  </view>
+  <view class="function_part" bindtap="turnToAbout">
+    <image class="icon" src="/imag/introductions01.png"></image>
+    <text class="function_text">版本说明</text>
+    <image class="icon01" src="/imag/arrow02.png"></image>
+  </view>
+</view>
+
+
+
