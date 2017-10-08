@@ -1,5 +1,6 @@
 <!--pages/passageDetails/passageDetails.wxml-->
-<view class='passage'> 
+<scroll-view scroll-y style='height:{{height}}px;' scroll-into-view="{{id}}">
+  <view class='passage' id='initial'> 
   <view class='topPart'>
     <image class='picTop' src='/imag/poster02.jpg'></image>
   </view>
@@ -42,7 +43,7 @@
 <!-- 内容部分wxml-->
   <view class='commentList' wx:for="{{examples}}">
 
-    <view class='leftPart'>
+    <view id='comment{{index}}' class='leftPart'>
 
       <view class='userInfo'>
         <image class='userAvatar' src='{{item.avatar}}'></image>
@@ -73,3 +74,7 @@
 </view>
 
 
+
+
+</scroll-view>
+  

@@ -54,7 +54,9 @@ Page({
     org:'',
     isReply:true,
     reply:'',
-    orgR:''
+    orgR:'',
+    height:0,
+    id:'initial'
   },
 
   /**
@@ -62,7 +64,22 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    console.log(this.data.examples)
+    var id1=options.id
+    if(id1==null){}
+    else{
+      that.setData({
+        id: id1
+      })
+    }
+    
+    wx.getSystemInfo({
+      success: function(res) {
+        console.log(res.windowHeight)
+        that.setData({
+          height:res.windowHeight
+        })
+      },
+    })
   },
 
   /**

@@ -26,11 +26,11 @@ Page({
         post: '再将目光转向爱科昇的另一款明星产品——活塞振动器，多种款型任君挑选。一根螺栓即可安装，轻松便捷。而且，爱科昇还对旗下活塞振动器产品进行了特殊技术处理，大幅度提升了耐久性。无需加油就能使用，低噪音结构，更加符合节能环保的发展趋势。'
       }
     ],
-    selected:1,
-    isShow0: false,
-    isShow1:true,
-    isShow2:true,
-    isShow3:true
+    //selected:1,
+    //isShow0: false,
+    //isShow1:true,
+    //isShow2:true,
+    //isShow3:true
   
   },
 
@@ -133,5 +133,14 @@ Page({
  
     })
   }
+  },
+  //跳转
+  sendId:function(e){
+    var that = this
+    var id=e.currentTarget.id
+    console.log(id)
+    wx.navigateTo({
+      url: '../passageDetails/passageDetails?id='+id,
+    })
   }
 })
