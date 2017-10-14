@@ -5,7 +5,12 @@
     "pages/message/message",
     "pages/mine/mine",
     "pages/passageDetails/passageDetails",
-    "pages/classificationPassages/classificationPassages"
+    "pages/classificationPassages/classificationPassages",
+    "pages/personalData/personalData",
+    "pages/collection/collection",
+    "pages/focus/focus",
+    "pages/introduction/introduction"
+    
 
     
   ],

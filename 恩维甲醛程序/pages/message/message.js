@@ -1,4 +1,5 @@
 // pages/message/message.js
+const app = getApp()
 Page({
 
   /**
@@ -31,13 +32,20 @@ Page({
     //isShow1:true,
     //isShow2:true,
     //isShow3:true
-  
+    login:'',
+    xorLogin:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this
+    var js=!app.globalData.isLogin
+    that.setData({
+      login: app.globalData.isLogin,
+      xorLogin:js
+    })
   
   },
 

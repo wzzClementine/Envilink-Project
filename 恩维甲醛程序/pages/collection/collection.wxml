@@ -1,0 +1,10 @@
+<!--pages/collection/collection.wxml-->
+<view class='all' wx:for="{{passageList}}" bindtap='turnTo'>
+  <view class='left'>
+    <image class='pic' src='{{item.cover}}'></image>
+  </view>
+  <view class='right'>
+    <text class='title'>{{item.title}}</text>
+    <text class='author'>{{item.time}} | by {{item.author}}</text>
+  </view>
+</view>

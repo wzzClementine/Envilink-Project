@@ -14,12 +14,21 @@ Page({
     interval: 5000,
     duration: 1000,
     circular:true,
-    navigation: [' 环境检测', '污染治理', '健康风险', '装修材料',  '谣言鉴定', '室内污染']
+    navigation: [' 环境检测', '污染治理', '健康风险', '装修材料',  '谣言鉴定', '室内污染'],
+    login:''
   },
   //事件处理函数
   
   onLoad: function () {
     var that = this
+    that.setData({
+      login: app.globalData.isLogin
+    })
+    console.log(this.data.login)
+    //改变全局变量的值
+    //app.globalData.isLogin = false
+    //获取文章数据内容
+
     wx.request({
       url: 'http://174.138.21.126/wp-json/wp/v2/posts',
 
@@ -38,13 +47,23 @@ Page({
                 console.log('author', res.data)
               }
             })
-
           }
-        })
-        
-      }
-      
+        })   
+      }  
     })
+    
+    //检查session状态并设置isLogin的值
+
+    wx.checkSession({
+      success: function () {
+        //session 未过期，并且在本生命周期一直有效
+      
+      },
+      fail: function () {
+        //如果过期则设置isLogin为true隐藏部分功能
+   
+  }
+})
     
   },
   onShareAppMessage: function () {
@@ -66,18 +85,52 @@ Page({
 
   
   turnToPassageDetail:function(e){
-    wx.navigateTo({
-      url: '../passageDetails/passageDetails',
-    })
+    if (this.data.login == false) {
+      wx.navigateTo({
+        url: '../passageDetails/passageDetails',
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '登录后即可浏览文章，是否要登录？',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            wx.reLaunch({
+              url: '../mine/mine',
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
   },
 
 
   navigateTo: function (e) {
     var id=e.currentTarget.id
     console.log(id)
-    wx.navigateTo({
-      url: '../classificationPassages/classificationPassages?id='+id,
-    })
+    if (this.data.login==false){
+      wx.navigateTo({
+        url: '../classificationPassages/classificationPassages?id=' + id,
+      })
+    }else{
+      wx.showModal({
+        title: '提示',
+        content: '登录后即可浏览文章，是否要登录？',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            wx.reLaunch({
+              url: '../mine/mine',
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
   }
 })
 

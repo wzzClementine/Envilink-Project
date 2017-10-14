@@ -1,0 +1,38 @@
+<!--pages/introduction/introduction.wxml-->
+<view class='all'>
+
+  <view class='top'>
+    <text class='intro'>目前1.0版本主要提供以下功能:</text>
+  </view>
+
+  <view class='introView'>
+    <text class='title1'>-社区</text>
+    <text class='description'>
+     -提供各类关于环境健康的攻略贴
+     -文章可评论，回复，点赞，收藏
+     -关注感兴趣的作者
+    </text>
+    </view>
+  <view class='introView'>
+    <text class='title'>-消息</text>
+    <text class='description'>
+    -及时接收回复
+    </text>
+        </view>
+  <view class='introView'>
+    <text class='title'>-我的</text>
+    <text class='description'>  
+     -编辑和填写个人资料
+     -浏览收藏的帖子
+     -浏览关注的作者
+     </text>
+         </view>
+
+
+
+</view>
+
+
+  
+
+

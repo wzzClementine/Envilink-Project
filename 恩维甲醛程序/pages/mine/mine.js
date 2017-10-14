@@ -10,7 +10,9 @@ Page({
    */
   data: {
 
-    userInfo: {}
+    userInfo: {},
+    login:'',
+    xorLogin:''
   
   },
 
@@ -25,7 +27,12 @@ Page({
       this.setData({
         userInfo: app.globalData.userInfo,
       })
-    } 
+    }
+    var js = !app.globalData.isLogin
+    that.setData({
+      login:app.globalData.isLogin,
+      xorLogin:js
+    })
   
   },
 
@@ -90,4 +97,54 @@ Page({
     }
 
   },
+  //跳转
+  navigateTo:function(e){
+    var id=e.currentTarget.id
+    if(id==0){
+      console.log(id)
+      wx.navigateTo({
+        url: '../personalData/personalData',
+      })
+    }else if(id==1){
+      wx.navigateTo({
+        url: '',
+      })
+    } else if (id == 2) {
+      wx.navigateTo({
+        url: '../collection/collection',
+      })
+    } else if (id == 3) {
+      wx.navigateTo({
+        url: '../focus/focus',
+      })
+    } else if (id == 4) {
+      wx.navigateTo({
+        url: '../introduction/introduction',
+      })
+    }
+
+  },
+  //登陆
+  login:function(e){
+    //改变全局变量的值
+    //app.globalData.isLogin = false
+    wx.getUserInfo({
+      
+    })
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: '',
+            data: {
+              code: res.code
+            }
+          })
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
+      }
+    });
+  }
 })

@@ -1,0 +1,28 @@
+<!--pages/personalData/personalData.wxml-->
+<view class='data'>
+
+  <view class='info'>
+    <image class='ava' src='{{userInfo.avatarUrl}}'></image>
+    <text class='name'>{{userInfo.nickName}}</text>
+  </view>
+  <view class='gender'>
+    <image class='icon' src='/imag/gender01.png'></image>
+    <picker mode="selector" range="{{genderList}}"  value="{{index}}" bindchange="chooseGender" custom-item="请选择性别">
+    <view class='addressV'>
+      <text class='label'>性别</text>
+      <text>{{genderList[index]}}</text>
+    </view>
+    </picker>
+  </view>
+
+  <view class='location'>
+    <image class='icon1' src='/imag/address01.png'></image>
+    <picker mode="region" bindchange="bindRegionChange" custom-item="请选择所在城市">
+    <view class='addressV'>
+      <text class='label'>住址</text>
+      <text>{{location[0]}} {{location[1]}} {{location[2]}}</text> 
+    </view>
+    </picker>
+  </view>
+
+</view>

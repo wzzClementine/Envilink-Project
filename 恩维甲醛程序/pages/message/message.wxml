@@ -17,9 +17,12 @@
 
 </view>-->
 
-
+<view class='login' hidden='{{xorLogin}}'>
+  <image class='mes' src='/imag/message01.png'></image>
+  <text>暂无消息,请登录后查看~</text>
+</view>
 <!-- 内容部分wxml-->
-<view class='commentList' wx:for="{{examples}}" hidden='{{isShow0}}'>
+<view class='commentList' wx:for="{{examples}}" hidden='{{login}}'>
 
    <view id='comment{{index}}' class='leftPart' bindtap='sendId'>
 

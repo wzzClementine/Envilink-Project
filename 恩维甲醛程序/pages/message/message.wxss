@@ -1,4 +1,17 @@
 /* pages/message/message.wxss */
+.login{
+  display: flex;
+  flex-direction: column;
+  margin-top: 40%;
+  align-items: center;
+  font-size: 17px;
+  color: #bfbfbf;
+}
+.mes{
+  margin-bottom: 10%;
+  height: 170rpx;
+  width: 170rpx;
+}
 .navigationBar{
  display: flex;
  flex-direction: row;

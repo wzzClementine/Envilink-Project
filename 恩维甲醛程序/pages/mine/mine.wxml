@@ -1,32 +1,41 @@
 <!--pages/mine/mine.wxml-->
-<view class="personInfo">
+
+
+<view class='login' hidden='{{xorLogin}}'>
+   <image class='avaL' src='/imag/avaL01.png'></image>
+   <text class='loginText'>请先登录哦~</text>
+   <view class='btn' bindtap='login'><text>点击登录</text></view>
+</view>
+
+
+<view class="personInfo" hidden='{{login}}'>
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover">
 </image>
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
 </view>
 
-<view class="function">
-  <view class="function_part" bindtap="turnToMyDevices">
+<view class="function" hidden='{{login}}'>
+  <view id="0" class="function_part" bindtap="navigateTo">
     <image class="icon" src="/imag/dataOfUser02.png"></image>
     <text class="function_text">个人资料</text>
     <image class="icon01" src="/imag/arrow02.png"></image>
   </view>
-    <view class="function_part" bindtap="turnToAttentionEquipment">
+  <!--<view id='1' class="function_part" bindtap="navigateTo">
     <image class="icon" src="/imag/post01.png"></image>
     <text class="function_text">我的订单</text>
     <image class="icon01" src="/imag/arrow02.png"></image>
-  </view>
-  <view class="function_part" bindtap="turnToAttentionEquipment">
+  </view>-->
+  <view id='2' class="function_part" bindtap="navigateTo">
     <image class="icon" src="/imag/collection01.png"></image>
     <text class="function_text">我的收藏</text>
     <image class="icon01" src="/imag/arrow02.png"></image>
   </view>
-  <view class="function_part" bindtap="turnToAbout">
+  <view id='3' class="function_part" bindtap="navigateTo">
     <image class="icon" src="/imag/attention01.png"></image>
     <text class="function_text">我的关注</text>
     <image class="icon01" src="/imag/arrow02.png"></image>
   </view>
-  <view class="function_part" bindtap="turnToAbout">
+  <view id='4' class="function_part" bindtap="navigateTo">
     <image class="icon" src="/imag/introductions01.png"></image>
     <text class="function_text">版本说明</text>
     <image class="icon01" src="/imag/arrow02.png"></image>

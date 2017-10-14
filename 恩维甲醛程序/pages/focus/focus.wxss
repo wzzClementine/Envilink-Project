@@ -1,0 +1,44 @@
+/* pages/focus/focus.wxss */
+.all{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 1%;
+  border-bottom: 1px solid #f0f0f0;
+}
+.intro{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.name{
+  font-size: 16px;
+}
+.sign{
+  font-size: 12px;
+  color: gray;
+  word-break:break-all;
+  display:-webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.ava{
+  border-radius: 50%;
+  height: 110rpx;
+  width: 110rpx;
+  margin: 2%;
+}
+.icon{
+  height: 50rpx;
+  width: 50rpx;
+}
+.wid01{
+  width: 20%;
+}
+.wid02{
+  width: 10%;
+  padding-right: 5%;
+  margin-left: 2%;
+}

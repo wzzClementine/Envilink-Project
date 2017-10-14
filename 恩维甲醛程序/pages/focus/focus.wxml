@@ -1,0 +1,15 @@
+<!--pages/focus/focus.wxml-->
+<view class='all' wx:for="{{authorList}}">
+
+    <view class='wid01'>
+      <image class='ava' src='{{item.ava}}'></image>
+    </view>
+    <view class='intro'>
+      <text class='name'>{{item.name}}</text>
+      <text class='sign'>{{item.sign}}</text>
+    </view>
+    <view class='wid02'>
+      <image class='icon' src='/imag/more02.png' bindtap='cancel'></image>
+    </view>
+    
+</view>

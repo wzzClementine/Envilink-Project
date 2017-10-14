@@ -1,0 +1,37 @@
+/* pages/introduction/introduction.wxss */
+.top{
+  display: flex;
+  align-items: center;
+  margin: 5%;
+  margin-left: 0%;
+  margin-top: 10%;
+  padding: 2%;
+  background-color: #99CC66;
+  color: white;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+
+}
+.intro{
+   font-size: 20px;
+   word-break:keep-all;
+}
+.description{
+  margin-left: 10%;
+  font-size: 15px;
+}
+.title{
+  font-size: 17px;
+  margin-left: 3%;
+}
+.introView{
+  display: flex;
+  flex-direction: column;
+  background-color: #99CC66;
+  border-radius: 10px;
+  margin: 5%;
+  margin-top: 10%;
+  padding: 4%;
+  color: white;
+}
+
