@@ -1,39 +1,22 @@
 // pages/message/message.js
 const app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    examples:[
-      {
-        avatar:"/imag/avatar01.jpg",
-        name:'clementine',
-        time:'2017.09.17',
-        commentDetails:'这是什么啊？好漂亮哦！',
-        post: '【中国环保在线 废气处理】《中国煤电清洁发展报告》显示，煤电仍是我国电力供应的主力电源和基础电源，但是技术已经达到世界先进水平，清洁发展取得巨大成效。在十几年的努力下，燃煤电厂大气污染物控制装置基本形成了全覆盖。'
-      },{
-        avatar: "/imag/avatar02.jpg",
-        name: 'Katherine',
-        time: '2017.02.22',
-        commentDetails: '哈哈哈哈，这样真的好吗？？？',
-        post: '以技术为媒，品质为窗，爱科昇振动机械(嘉兴)有限公司市场开拓步伐锐不可当。本着友好交流，提升品牌知名度的初衷，爱科昇携接力式气锤、活塞振动器等多款明星产品亮相第九届上海化工环保展，一经展出就引起热议。'
-      },{
-        avatar: "/imag/avatar03.jpg",
-        name: 'Felicity',
-        time: '2017.08.02',
-        commentDetails: '已经不知道要说些什么了，就随便打几句话了，词穷了已经.....',
-        post: '再将目光转向爱科昇的另一款明星产品——活塞振动器，多种款型任君挑选。一根螺栓即可安装，轻松便捷。而且，爱科昇还对旗下活塞振动器产品进行了特殊技术处理，大幅度提升了耐久性。无需加油就能使用，低噪音结构，更加符合节能环保的发展趋势。'
-      }
-    ],
+   
+    comments:[],
+    postId:[]
     //selected:1,
     //isShow0: false,
     //isShow1:true,
     //isShow2:true,
     //isShow3:true
-    login:'',
-    xorLogin:''
+    //login:'',
+    //xorLogin:''
   },
 
   /**
@@ -41,12 +24,50 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    var js=!app.globalData.isLogin
-    that.setData({
-      login: app.globalData.isLogin,
-      xorLogin:js
-    })
-  
+
+    wx.request({
+      url: 'https://mp.envilink.com/index.​php?rest_route=/wp/v2/comments',
+      success: function (res) {
+        console.log('comment', res.data)
+        var replyArr = [];
+        var passages = [];
+        var postId = [];
+        for (var i = 0; i < res.data.length; i++) {
+          replyArr.push(res.data[i].content.rendered)
+        }
+        for (let i = 0; i < replyArr.length; i++) {
+          WxParse.wxParse('reply' + i, 'html', replyArr[i], that);
+          if (i === replyArr.length - 1) {
+            WxParse.wxParseTemArray("replyTemArray", 'reply', replyArr.length, that)
+          }
+        }
+        for (var i = 0; i < res.data.length; i++) {
+          res.data[i].date = res.data[i].date.slice(0, 10)
+          var leng = res.data.length
+          wx.request({
+            url: 'https://mp.envilink.com/index.​php?rest_route=/wp/v2/posts/' + res.data[i].post,
+            success:function(res){
+              passages.push(res.data.excerpt.rendered)
+              postId.push(res.data.id)
+              if (passages.length - 1 == leng - 1) {
+                for (let i = 0; i < passages.length; i++) {
+                  WxParse.wxParse('passage' + i, 'html', passages[i], that);
+                  if (i === passages.length - 1) {
+                    WxParse.wxParseTemArray("passageArray", 'passage', passages.length, that)
+                  }
+                }
+              };
+            }
+          })
+        }
+        console.log('passges',passages)
+
+        that.setData({
+          comments:res.data,
+          postId:postId,
+        })
+      }
+    })  
   },
 
   /**
@@ -143,7 +164,7 @@ Page({
   }
   },
   //跳转
-  sendId:function(e){
+  turnToPassage:function(e){
     var that = this
     var id=e.currentTarget.id
     console.log(id)

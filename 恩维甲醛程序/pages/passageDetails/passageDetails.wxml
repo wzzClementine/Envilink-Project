@@ -1,15 +1,16 @@
 <!--pages/passageDetails/passageDetails.wxml-->
+<import src="../../wxParse/wxParse.wxml"/> 
 <scroll-view scroll-y style='height:{{height}}px;' scroll-into-view="{{id}}">
   <view class='passage' id='initial'> 
   <view class='topPart'>
-    <image class='picTop' src='/imag/poster02.jpg'></image>
+    <image class='picTop' src='{{cover}}'></image>
   </view>
 
-  <text class='title'>倡导低碳生活 呵护生态家园</text>
+  <text class='title'>{{title}}</text>
 
   <view class="authorView">
-     <text class="author">Katherine | 2017.09.09</text>
-     <view class="add" bindtap="add">+关注</view>
+     <text class="author">{{author}} | {{time}}</text>
+     <!--<view class="add" bindtap="add">+关注</view>-->
   </view>
 
   <view class='titlePart'>
@@ -29,9 +30,11 @@
   <view class='line'></view>
 
   <view class='contentPart'>
-   <text class='content'>央广网乌鲁木齐6月14日消息（记者张孝成 乌鲁木齐台记者 汪亮）13日是全国低碳日，新疆节能监察总队走进乌鲁木齐社区，开展以“节能有我 绿色共享”为主题的节能宣传活动，提升边疆各族居民节能意识。外卖类App“饿了么”近期也发布了中国外卖大数据，显示中国市场用户规模达到6亿， 2016年在线外卖用户消费频次每周消费3次以上的用户占比高达63.3%，外卖就餐成为常规方式。节能环保产业的快速发展，不仅不会成为造成经济下行的主因，而且能够倒逼行业优胜劣汰，促进产业升级。在当前经济新常态形势下，政府有意识让环保产业接过接力棒，成为经济发展的新引擎。</text>
+   <view class='content'><template is="wxParse" data="{{wxParseData:article.nodes}}"/></view>
   </view>
 
+ 
+  <view bindtap='test'>testComment</view>
 
   <view class='comment' >
     <input class='commentInput'placeholder='评论一下...' bindblur='saveContent' bindconfirm='getContent' value='{{org}}' ></input>
@@ -40,33 +43,89 @@
 
   <view class='line1'></view>
 
-<!-- 内容部分wxml-->
-  <view class='commentList' wx:for="{{examples}}">
-
-    <view id='comment{{index}}' class='leftPart'>
-
-      <view class='userInfo'>
-        <image class='userAvatar' src='{{item.avatar}}'></image>
-        <view class='userName'>
-          <text class='name'>{{item.name}}</text>
-          <text class='time'>{{item.time}}</text>
-        </view> 
-        <image class='iconDelete' src='/imag/reply02.png' bindtap='replyComment'></image>
-      </view>
-
-      <text class='commentDetails'>{{item.commentDetails}}</text>
-
-      <view class='replyContent' wx:for="{{item.commentReply}}" wx:for-item="reply" bindtap='replyComment'>
-         <text class='nickName'>{{reply.nickName}}:</text>
-         <text>{{reply.replyContent}}</text>
-      </view>
-
-
-    </view>
-
-  </view>
- 
 </view>
+
+
+
+
+<!-- 评论部分wxml-->
+
+   <view wx:key="id" wx:for="{{comments}}">
+    <view   wx:if="{{item.parent==0}}">
+	  <view class='commentList'>
+
+	     <view class='userInfo'>
+           <image class='userAvatar' src="{{item.author_avatar_urls['96']}}"></image>
+           <view class='userName'>
+             <text class='name'>{{item.author_name}}</text>
+             <text class='time'>{{item.date}}</text>
+           </view> 
+           <image id='{{item.id}}'  class='iconDelete' src='/imag/reply02.png' bindtap='replyComment'></image>
+         </view>
+
+
+         <view class='commentDetails'><template is="wxParse" data="{{wxParseData:comArray[index]}}"/></view>
+
+		   
+         <view id='{{item.id}}' wx:for="{{comments}}" wx:key="itemid1" wx:for-index="idx1" wx:for-item="item1" bindtap='replyComment' >
+         <view  wx:if="{{item.id===item1.parent}}">
+		     <view class='replyContent' >
+               <text class='nickName'>{{item1.author_name}} 回复 {{item.author_name}}:</text>
+               <view class='replyCon'><template is="wxParse" data="{{wxParseData:comArray[idx1]}}"/></view>
+             </view>
+
+
+             <view id='{{item1.id}}'  wx:for="{{comments}}" wx:key="itemid2" wx:for-index="idx2" wx:for-item="item2" bindtap='replyComment'>
+                <view  wx:if="{{item1.id===item2.parent}}">
+		          <view class='replyContent'>
+                    <text class='nickName'>{{item2.author_name}} 回复 {{item1.author_name}}:</text>
+                    <view class='replyCon'><template is="wxParse" data="{{wxParseData:comArray[idx2]}}"/></view>
+                  </view>
+                  
+                   <view id='{{item2.id}}' wx:for="{{comments}}" wx:key="itemid3" wx:for-index="idx3" wx:for-item="item3" bindtap='replyComment' >
+                     <view  wx:if="{{item2.id===item3.parent}}">
+		               <view class='replyContent'>
+                         <text class='nickName'>{{item3.author_name}} 回复 {{item2.author_name}}:</text>
+                         <view class='replyCon'><template is="wxParse" data="{{wxParseData:comArray[idx3]}}"/></view>
+                       </view>
+				     </view><!--for3-->
+				  </view><!--if3-->
+
+
+
+
+	            </view><!--if2-->
+
+	         </view><!--for2-->
+	  
+	    
+		
+		
+		
+		
+		
+		  </view><!--if1-->
+		
+		 </view><!--for1-->
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  </view><!--class-->
+
+
+
+    </view><!--if-->
+ </view><!--for-->
+ 
+
 
 <view class='reply' hidden='{{isReply}}'>
         <input class='commentInput'  placeholder='回复...' bindblur='hiddenAndSave' bindconfirm='getReplyContent' value='{{orgR}}'></input>

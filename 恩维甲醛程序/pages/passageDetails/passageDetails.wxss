@@ -14,6 +14,9 @@
 .title{
   margin-left: 5%;
   margin-bottom: 3%;
+  margin-right: 3%;
+  font-weight: 600;
+  font-size: 20px;
 }
 .authorView{
   display: flex;
@@ -90,7 +93,25 @@
   margin-right: 5%;
 }
 .content{
-  font-size: 13px;
+  font-size: 15px;
+  line-height: 200%;
+}
+.content image{
+  width: 100% !important;
+  margin: 3% !important;
+  margin-left: 0% !important; 
+}
+.wxParse-h3{
+  font-size: 18px !important;
+  font-weight: 600;
+}
+.wxParse-h4{
+  font-size: 17px !important;
+  font-weight: 600;
+}
+.wxParse-h5{
+  font-size: 16px !important;
+  font-weight: 600;
 }
 .comment{
   display: flex;
@@ -112,11 +133,10 @@
 }
 .commentList{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 33.33%;
   padding: 2%;
   width: 100%;
-
   border-bottom: 1PX solid #E6E6E6;
 }
 .leftPart{
@@ -185,8 +205,8 @@
 .nickName{
   margin-right: 1%;
 }
-.replyContent{
-  width:145%;
+.replyContent{  
+  width:90%;
   background-color: #F0F0F0;
   font-size: 11px;
   margin-left: 1%;
@@ -198,4 +218,8 @@
   border-top-right-radius: 8px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+.replyCon{
+  word-wrap: break-word; 
+
 }

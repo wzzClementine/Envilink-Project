@@ -1,11 +1,15 @@
 //app.js
+
+var qcloud = require('./vendor/qcloud-weapp-client-sdk/index');
+var config = require('./config');
+
 App({
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
+  
     // 登录
     wx.login({
       success: res => {
@@ -33,6 +37,13 @@ App({
       }
     })
   },
+  /**
+     * 小程序初始化时执行，我们初始化客户端的登录地址，以支持所有的会话操作
+     */
+  onLaunch() {
+    qcloud.setLoginUrl(config.service.loginUrl);
+  },
+
   globalData: {
     userInfo: null,
     isLogin:false

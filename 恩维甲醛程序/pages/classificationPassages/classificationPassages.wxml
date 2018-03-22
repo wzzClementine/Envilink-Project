@@ -4,19 +4,28 @@
   <text>{{title}}</text>
 </view>
 
+
 <view class='line'></view>
 
-<view class='passageList' wx:for="{{passageList}}" bindtap='turnTo'>
-  <image class='cover' src='{{item.cover}}'></image>
+<view wx:key="id" wx:for="{{passageList}}" >
 
-  <view class='intro'>
-    <text class='title'>{{item.title}}</text>
-    <text class="time">Katherine | 2017.09.09</text>
-    <view class='read'>
-      <image class='icon' src='/imag/read03.png'></image>
-      <text class='author'>{{item.readAmount}}</text>
-    </view>
+   <view class='passageList' bindtap='turnTo' id='{{item.id}}'>
+  
+      <view wx:for="{{pics}}" wx:for-item="item1">
+       <view wx:if="{{item.id===item1.post}}">
+          <image  class="cover" src="{{item1.source_url}}"></image>
+       </view>
+      </view>
+
+      <view class='intro'>
+        <text class='title'>{{item.title.rendered}}</text>
+        <text class="time">{{authorName[index]}} | {{item.date}}</text>
+        <view class='read'>
+          <image class='icon' src='/imag/read03.png'></image>
+          <text class='author'>6784</text>
+        </view>
     
   </view>
 
+ </view>
 </view>

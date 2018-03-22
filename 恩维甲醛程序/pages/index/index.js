@@ -1,6 +1,38 @@
 //index.js
-//获取应用实例
+//
 const app = getApp()
+
+var WxParse = require('../../wxParse/wxParse.js');
+
+// 引入 QCloud 小程序增强 SDK
+var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
+
+// 引入配置
+var config = require('../../config');
+
+// 显示繁忙提示
+var showBusy = text => wx.showToast({
+  title: text,
+  icon: 'loading',
+  duration: 10000
+});
+
+// 显示成功提示
+var showSuccess = text => wx.showToast({
+  title: text,
+  icon: 'success'
+});
+
+// 显示失败提示
+var showModel = (title, content) => {
+  wx.hideToast();
+
+  wx.showModal({
+    title,
+    content: JSON.stringify(content),
+    showCancel: false
+  });
+};
 
 Page({
   data: {
@@ -14,43 +46,123 @@ Page({
     interval: 5000,
     duration: 1000,
     circular:true,
-    navigation: [' 环境检测', '污染治理', '健康风险', '装修材料',  '谣言鉴定', '室内污染'],
-    login:''
+    navigation: [{
+      title:'环境检测',
+      id:'2'
+    },{
+      title: '污染治理',
+      id: '3'
+    },{
+      title: '健康风险',
+      id: '4'
+    }, {
+      title: '装修材料',
+      id: '5'
+    }, {
+      title: '谣言鉴定',
+      id: '6'
+    }, {
+      title: '室内污染',
+      id: '7'
+    }],
+    login:'',
+
+   /*登陆部分数据*/
+    loginUrl: config.service.loginUrl,
+    requestUrl: config.service.requestUrl,
+    tunnelUrl: config.service.tunnelUrl,
+    tunnelStatus: 'closed',
+    tunnelStatusText: {
+      closed: '已关闭',
+      connecting: '正在连接...',
+      connected: '已连接'
+    },
+    pages_id:0,
+    pics:[],
+    authorName:[],
+    contentArray:[]
   },
-  //事件处理函数
-  
+  //测试登陆SDK
+  /**
+     * 点击「登录」按钮，测试登录功能
+     */
+  doLogin() {
+    showBusy('正在登录');
+
+    // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们在 app.js 的入口里面已经调用过了，后面就不用再调用了
+    qcloud.login({
+      success(result) {
+        showSuccess('登录成功');
+        console.log('登录成功', result);
+      },
+
+      fail(error) {
+        showModel('登录失败', error);
+        console.log('登录失败', error);
+      }
+    });
+  },
+
+  /**
+   * 点击「清除会话」按钮
+   */
+  clearSession() {
+    // 清除保存在 storage 的会话信息
+    qcloud.clearSession();
+    showSuccess('会话已清除');
+  },
+  //
   onLoad: function () {
     var that = this
-    that.setData({
-      login: app.globalData.isLogin
-    })
-    console.log(this.data.login)
-    //改变全局变量的值
-    //app.globalData.isLogin = false
-    //获取文章数据内容
-
+    var pics = []
+    var name = []
     wx.request({
-      url: 'http://174.138.21.126/wp-json/wp/v2/posts',
-
+      url: 'https://mp.envilink.com/wp-json/wp/v2/posts/',
       success: function (res) {
-        console.log(res.data)
-        console.log(res.data[0].content)
-        var url = res.data[0]._links.replies[0].href
-        var url2 = res.data[0]._links.author[0].href
-        wx.request({
-         url: url,
-          success:function(res){
-            console.log('comments', res.data)
-            wx.request({
-              url: url2,
-              success:function(res){
-                console.log('author', res.data)
-              }
-            })
+        console.log('passages', res.data)
+        var replyArr = [];
+        for (var i = 0; i < res.data.length; i++) {
+          replyArr.push(res.data[i].excerpt.rendered)
+        }
+        for (let i = 0; i < replyArr.length; i++) {
+          WxParse.wxParse('reply' + i, 'html', replyArr[i], that);
+          if (i === replyArr.length - 1) {
+            WxParse.wxParseTemArray("replyTemArray", 'reply', replyArr.length, that)
           }
-        })   
-      }  
+        }
+        for (var i = 0; i < res.data.length; i++) {
+          res.data[i].date = res.data[i].date.slice(0, 10)
+          wx.request({
+            url: res.data[i]._links['wp:attachment'][0].href,
+            success: function (res) {
+              pics.push(res.data[0])
+              console.log(res.data[0])
+              that.setData({
+                pics: pics
+              })
+            }
+          })
+          wx.request({
+            url: 'https://mp.envilink.com/index.​php?rest_route=/wp/v2/users/' + res.data[i].author,
+            success: function (res) {
+              name.push(res.data.name)
+              that.setData({
+                authorName: name
+              })
+            }
+          })
+        }
+        that.setData({
+          passages: res.data,
+        })
+      }
     })
+   
+
+
+    
+   //测试登陆SDK
+   
     
     //检查session状态并设置isLogin的值
 
@@ -65,6 +177,8 @@ Page({
   }
 })
     
+  },
+  onReady:function(e){
   },
   onShareAppMessage: function () {
     return {
@@ -85,9 +199,11 @@ Page({
 
   
   turnToPassageDetail:function(e){
+    var id= e.currentTarget.id
+    console.log('id',id)
     if (this.data.login == false) {
       wx.navigateTo({
-        url: '../passageDetails/passageDetails',
+        url: '../passageDetails/passageDetails?id='+id,
       })
     } else {
       wx.showModal({
@@ -113,7 +229,7 @@ Page({
     console.log(id)
     if (this.data.login==false){
       wx.navigateTo({
-        url: '../classificationPassages/classificationPassages?id=' + id,
+        url: '../classificationPassages/classificationPassages?id='+id,
       })
     }else{
       wx.showModal({

@@ -9,19 +9,10 @@ Page({
     title:'',
     titleImageList:['/imag/test02.png','/imag/manage01.png','/imag/health01.png','/imag/material01.png','/imag/identify01.png','/imag/pollution01.png'],
     titleImage:'',
-    passageList:[{
-      cover:'/imag/poster01.jpg',
-      title:'倡导低碳生活 呵护生态家园 共享碧水蓝天',
-      readAmount:3786+' 浏览'
-    }, {
-      cover: '/imag/poster02.jpg',
-      title: '环保只是为了人类自己',
-      readAmount: 921 + ' 浏览'
-      }, {
-        cover: '/imag/poster03.jpg',
-        title: '回顾2015中国生态环保业大数据报告',
-        readAmount: 4176 + ' 浏览'
-      },]
+    passageList:[],
+    pics: [],
+    authorName: [],
+    contentArray: []
   },
 
 
@@ -33,14 +24,51 @@ Page({
 
     //获取相应的页面标题
     var id=options.id
-    var title=this.data.navigation[id]
-    var titleImage = this.data.titleImageList[id]
+    var title=this.data.navigation[id-2]
+    var titleImage = this.data.titleImageList[id-2]
     console.log(options.id)
-
     that.setData({
        title:title,
-       titleImage: titleImage
+       titleImage: titleImage,
+       idP:id
     })
+    
+    //获取分类对应的文章
+    var pics = []
+    var name = []
+    wx.request({
+      url: 'https://mp.envilink.com/index.​php?rest_route=/wp/v2/posts&categories[0]='+id,
+      success: function (res) {
+        console.log('passages', res.data)
+        for (var i = 0; i < res.data.length; i++) {
+          res.data[i].date = res.data[i].date.slice(0, 10)
+          wx.request({
+            url: res.data[i]._links['wp:attachment'][0].href,
+            success: function (res) {
+              console.log(res.data)
+              pics.push(res.data[0])
+              that.setData({
+                pics: pics
+              })
+            }
+          })
+          wx.request({
+            url: 'https://mp.envilink.com/index.​php?rest_route=/wp/v2/users/' + res.data[i].author,
+            success: function (res) {
+              name.push(res.data.name)
+              that.setData({
+                authorName: name
+              })
+            }
+          })
+        }
+        console.log('pics',pics)
+        that.setData({
+          passageList: res.data,
+        }) 
+      }
+    })
+
 
 
 
@@ -95,8 +123,9 @@ Page({
   
   },
   turnTo:function(e){
+    var id = e.currentTarget.id
     wx.navigateTo({
-      url: '../passageDetails/passageDetails',
+      url: '../passageDetails/passageDetails?id='+id,
     })
   }
 })
